@@ -1,7 +1,7 @@
-import { Card, Deck } from './Deck';
+import { ICard, Deck } from './Deck';
 
 export class Player {
-  private hand: Card[];
+  public hand: ICard[];
 
   constructor(private deck: Deck) {
     this.hand = this.deck.getCards(4);
@@ -26,8 +26,8 @@ export class Player {
     return this.hand.length === 0;
   }
 
-  useCards(cardIdxs: number[]): Card[] {
-    const cardsToUse: Card[] = [];
+  useCards(cardIdxs: number[]): ICard[] {
+    const cardsToUse: ICard[] = [];
     for (let cardIdx of cardIdxs) cardsToUse.push(this.hand[cardIdx]);
     this.hand = this.hand.filter((card) => cardsToUse.indexOf(card) === -1);
 

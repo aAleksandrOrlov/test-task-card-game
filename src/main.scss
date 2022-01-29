@@ -1,0 +1,75 @@
+body {
+  background-color: #333;
+  color: #fff;
+}
+
+.table {
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .cards {
+    width: min-content;
+    display: flex;
+    gap: 20px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button {
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .error {
+    color: red;
+  }
+}
+
+.result {
+  font-size: 32px;
+  text-align: center;
+}
+
+.player {
+  position: relative;
+  width: min-content;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 20px;
+}
+
+.inactive-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card {
+  width: 125px;
+  height: 200px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #000;
+  background-color: #fff;
+  border: 3px solid #aaa;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &.active {
+    border: 3px solid red;
+  }
+}

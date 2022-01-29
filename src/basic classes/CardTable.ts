@@ -1,18 +1,24 @@
 import { Player } from './Player';
-import { Deck, Card } from './Deck';
+import { Deck, ICard } from './Deck';
 
-export class CartTable {
+export class CardTable {
   private deck = new Deck();
-  private players = [new Player(this.deck), new Player(this.deck)];
+  public players: Player[] = [];
 
-  private turn = 0;
-  private attackCards: Card[] = [];
-  private defenceCards: Card[] = [];
+  public turn = 0;
+  public attackCards: ICard[] = [];
+  public defenceCards: ICard[] = [];
   private extraCardsNum: number = 0;
 
-  private result: string | null = null;
+  public result: string | null = null;
 
-  constructor() {
+  constructor(playersNum: number) {
+    if (playersNum < 2 || playersNum > 7)
+      throw new Error('Invalid number of players');
+
+    for (let i = 0; i < playersNum; i++)
+      this.players.push(new Player(this.deck));
+    
     this.checkUnorderMove();
   }
 
@@ -85,10 +91,7 @@ export class CartTable {
   }
 
   private endMove(): void {
-    if (this.checkWin()) {
-      console.log(this.result);
-      return;
-    }
+    this.checkWin();
 
     this.attackCards = [];
     this.defenceCards = [];
@@ -102,26 +105,18 @@ export class CartTable {
   }
 
   attack(cardIdxs: number[]): void {
-    if (cardIdxs.length > 3)
-      throw new Error('The max amount of attack cards is three');
-
     this.attackCards = this.players[this.turn].useCards(cardIdxs);
     this.changeTurn();
   }
 
   defence(cardIdxs: number[]): void {
-    if (cardIdxs.length > 3)
-      throw new Error('The max amount of defence cards is three');
-    if (cardIdxs.length > this.attackCards.length)
-      throw new Error('Number of defence cards can not be more than attack cards');
-
     this.defenceCards = this.players[this.turn].useCards(cardIdxs);
     this.extraCardsNum = this.attackCards.length - this.defenceCards.length;
 
     if (this.extraCardsNum) {
       this.players[this.turn].drawCards(this.extraCardsNum);
       this.changeTurn(true);
-    } else this.changeTurn();
+    }
 
     this.endMove();
   }

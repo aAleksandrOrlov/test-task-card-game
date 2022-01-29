@@ -1,4 +1,4 @@
-export interface Card {
+export interface ICard {
   value: number;
   suit: string;
   cardName: string;
@@ -8,7 +8,7 @@ const cardNames = ['ace', 'king', 'queen', 'jack', 'ten', 'seven', 'six']; // ca
 const suites = ['spades', 'clubs', 'diamonds', 'hearts'];
 
 export class Deck {
-  public deck: Card[] = [];
+  public deck: ICard[] = [];
 
   constructor() {
     this.generateDeck();
@@ -31,8 +31,8 @@ export class Deck {
     this.deck.sort(() => (Math.random() > 0.5 ? 1 : -1));
   }
 
-  getCards(num: number): Card[] {
-    const cards: Card[] = [];
+  getCards(num: number): ICard[] {
+    const cards: ICard[] = [];
     while (num > 0) {
       const lastEl = this.deck.pop();
       if (lastEl) cards.push(lastEl);
